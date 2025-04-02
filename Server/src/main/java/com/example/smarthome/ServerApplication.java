@@ -4,18 +4,21 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.*;
-import java.net.*;
-import java.util.concurrent.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootApplication
 @RestController
 public class ServerApplication {
-    private static final ConcurrentHashMap<String, Socket> deviceRegistry = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, DeviceHandler> deviceRegistry = new ConcurrentHashMap<>();
     private static final int TCP_PORT = 8081;
 
     public static void main(String[] args) {
         startTcpServer();
+        startPeriodicStatusLogger();
         SpringApplication.run(ServerApplication.class, args);
     }
 
@@ -34,45 +37,61 @@ public class ServerApplication {
     }
 
     private static void handleActuatorConnection(Socket clientSocket) {
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-            String registrationMessage = in.readLine();
-            String[] parts = registrationMessage.split(",");
-            String deviceId = parts[0];
-            String initialStatus = parts[1];
+        try {
+            System.out.println("New connection from: " + clientSocket.getInetAddress());
 
-            deviceRegistry.put(deviceId, clientSocket);
-            System.out.println("Device registered: " + deviceId + " with status: " + initialStatus);
+            DeviceHandler deviceHandler = new DeviceHandler(clientSocket);
+            String deviceId = deviceHandler.getDeviceId();
 
-            while (true) {
-                String command = in.readLine();
-                if (command == null) break;
-                System.out.println("Received update from " + deviceId + ": " + command);
+            // Check for duplicate registration.
+            if (deviceRegistry.containsKey(deviceId)) {
+                System.out.println("Device with ID " + deviceId + " is already registered. Rejecting duplicate.");
+                deviceHandler.sendCommand("DUPLICATE");
+                deviceHandler.close();
+                return;
             }
+
+            deviceRegistry.put(deviceId, deviceHandler);
+            System.out.println("Device registered: " + deviceId + " with initial status: "
+                    + deviceHandler.sendCommand("STATUS_REQUEST"));
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            deviceRegistry.values().remove(clientSocket);
-            try {
-                clientSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
+    private static void startPeriodicStatusLogger() {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.print("[Status Snapshot] ");
+                for (Map.Entry<String, DeviceHandler> entry : deviceRegistry.entrySet()) {
+                    String id = entry.getKey();
+                    DeviceHandler handler = entry.getValue();
+                    try {
+                        String status = handler.sendCommand("STATUS_REQUEST");
+                        System.out.print(id + ": " + status + ", ");
+                    } catch (IOException e) {
+                        System.out.print(id + ": error, ");
+                    }
+                }
+                System.out.println();
+            }
+        }).start();
+    }
+
+    // HTTP endpoint to control the device
     @PostMapping("/control")
     public String controlDevice(@RequestParam String deviceId, @RequestParam String command) {
         if (!deviceRegistry.containsKey(deviceId)) {
             return "{\"message\": \"Device not found\"}";
         }
-
-        Socket deviceSocket = deviceRegistry.get(deviceId);
+        DeviceHandler deviceHandler = deviceRegistry.get(deviceId);
         try {
-            PrintWriter out = new PrintWriter(deviceSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(deviceSocket.getInputStream()));
-
-            out.println(command);
-            String response = in.readLine();
+            String response = deviceHandler.sendCommand(command);
             return "{\"message\": \"" + response + "\"}";
         } catch (IOException e) {
             deviceRegistry.remove(deviceId);

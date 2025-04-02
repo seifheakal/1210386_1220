@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1ea293f-c0c9-437f-b71d-404f92e5681b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Actuator/Actuator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/HttpClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/example/smarthome/ServerApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/com/example/smarthome/DeviceHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Actuator/Actuator.class" beforeDir="false" afterPath="$PROJECT_DIR$/Actuator/Actuator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Actuator/Actuator.java" beforeDir="false" afterPath="$PROJECT_DIR$/Actuator/Actuator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/com/example/smarthome/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/com/example/smarthome/ServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/classes/com/example/smarthome/ServerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/classes/com/example/smarthome/ServerApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Server/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,30 +42,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Actuator.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/hi/apt/assigment 2/1210386_1220",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Actuator.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/hi/apt/assigment 2/1210386_1220&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\seift\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="6dbbd7ea-0cff-441d-9d8a-c4917061ab8d" reportId="1210386_1220/qodana/2025-04-02" />
